@@ -1,0 +1,21 @@
+name: Deploy Stage
+
+on:
+  push:
+    branches:
+      - release/stage
+
+jobs:
+  deploy:
+    runs-on: internal-stage
+
+    env:
+      DATA_SERVICE_URL: https://api-dev.cords.dev
+      DATA_SERVICE_API_KEY: ${{ secrets.DATA_SERVICE_API_KEY }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - run: ./tools/deploy /home/ubuntu/sites/chroma-service

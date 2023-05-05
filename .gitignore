@@ -1,0 +1,5 @@
+.env
+/data*
+.idea/
+src/__pycache__
+docker-compose.override.yml

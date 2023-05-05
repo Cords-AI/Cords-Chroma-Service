@@ -1,0 +1,10 @@
+#!/bin/bash
+set -ex
+
+j2 .env.j2 > .env
+
+rsync \
+  -a . \
+  --exclude=/docker-compose.override.yml \
+  --delete \
+  $1

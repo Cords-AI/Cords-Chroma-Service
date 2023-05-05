@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  app:
+    hostname: chroma-service
+    build:
+      dockerfile: ./docker/Dockerfile
+      context: .
+    volumes:
+      - .:/app
+      - ./data:/data
+    user: "1000:1000"
+    working_dir: /app
+    command: ./docker/init
+    restart: always

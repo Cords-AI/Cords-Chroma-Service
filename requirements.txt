@@ -1,0 +1,6 @@
+fastapi
+uvicorn[standard]
+chromadb
+openai
+tensorflow-hub
+tensorflow-text
