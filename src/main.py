@@ -1,10 +1,11 @@
 from dotenv import load_dotenv
 load_dotenv()
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Response
 from collection import collection, client
 
 from PostParams import PostParams
+from DeleteParams import DeleteParams
 
 app = FastAPI()
 
@@ -30,3 +31,11 @@ async def read_root(params: PostParams):
         documents = [params.document],
     )
     client.persist()
+
+@app.post("/delete")
+async def read_root(params: DeleteParams):
+    collection.delete(
+        ids=params.ids,
+    )
+    client.persist()
+    return Response(status_code=200)

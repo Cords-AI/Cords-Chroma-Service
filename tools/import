@@ -1,0 +1,6 @@
+#!/bin/bash
+
+rsync -aP \
+  data-service-dev.cords.dev:/home/ubuntu/sites/chroma-service/data/ \
+  ./data/ \
+  --delete
