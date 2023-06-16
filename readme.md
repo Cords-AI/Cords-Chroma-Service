@@ -14,20 +14,23 @@ Uses OpenAPI [text-embedding-ada-002](https://openai.com/blog/new-and-improved-e
 
 ## Usage
 
-Start the server
+**Start the server**
 
 ```shell
 docker compose up -d
 ```
 
-Add a record
+**Add a record**
 
 ```shell
-docker compose exec app curl -X POST curl http://localhost -H 'Content-Type: application/json' -d '{"id": "123", "partner": "211", "document": "hello world"}'
+docker compose exec app curl -X POST http://localhost -H 'Content-Type: application/json' -d '{"id": "123", "partner": "211", "document": "hello world"}'
 ```
 
-Run a query
+**Run a query**
 
 ```shell
-docker compose exec app curl http://localhost?q=learn+to+code
+docker compose exec app curl -X POST http://localhost/search?q=learn+to+code -H 'Content-Type: application/json' -d '{"ids": "'\''262e7a66-8dc5-40c7-8920-e026ee538bf6'\'','\''a5b99de9-1288-4915-be5f-1bfcf74834dc'\''"}'
 ```
+
+Include an optional list of ids in the post body to limit the results.
+

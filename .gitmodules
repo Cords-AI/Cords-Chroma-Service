@@ -1,0 +1,3 @@
+[submodule "lib/chroma"]
+	path = lib/chroma
+	url = ../chroma.git

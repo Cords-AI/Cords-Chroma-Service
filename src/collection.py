@@ -21,7 +21,7 @@ if "OPENAI_API_KEY" in os.environ and os.environ["OPENAI_API_KEY"] != "":
 client = chromadb.Client(
     chromadb.config.Settings(
         chroma_db_impl="duckdb+parquet",
-        persist_directory=f"/data/{model_name}"
+        persist_directory=f"{os.environ['DATA_DIR']}/{model_name}"
     )
 )
 

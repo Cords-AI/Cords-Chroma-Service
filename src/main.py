@@ -3,37 +3,38 @@ load_dotenv()
 
 from fastapi import FastAPI, Response
 from collection import collection, client
-
 from PostParams import PostParams
 from DeleteParams import DeleteParams
+from SearchBody import SearchBody
 
 app = FastAPI()
 
-@app.get("/")
-async def read_root(q: str, partner: str = None):
-    where = None
-    if partner:
-        where = {"partner": partner}
+
+@app.post("/search")
+async def search(q: str, search_body: SearchBody | None = None):
+    where_id = search_body.ids if search_body and search_body.ids else None
 
     result = collection.query(
         query_texts=[q],
         n_results=100,
-        where=where,
+        where_id=where_id,
         include=[]
     )
     return result
 
+
 @app.post("/")
-async def read_root(params: PostParams):
+async def upsert(params: PostParams):
     collection.upsert(
         ids=[params.id],
         metadatas=[{"partner": params.partner}],
-        documents = [params.document],
+        documents=[params.document],
     )
     client.persist()
 
+
 @app.post("/delete")
-async def read_root(params: DeleteParams):
+async def delete(params: DeleteParams):
     collection.delete(
         ids=params.ids,
     )

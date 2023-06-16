@@ -19,7 +19,8 @@ RUN wget https://tfhub.dev/google/universal-sentence-encoder-multilingual/3?tf-h
 RUN tar xfvz 3.tar.gz
 RUN rm 3.tar.gz
 
-# App
-RUN apt-get install python3-pip -y
-COPY requirements.txt /
-RUN pip install -r /requirements.txt
+# Chroma
+RUN apt-get install python3.10-venv -y
+RUN apt-get install git -y
+RUN apt-get install build-essential -y
+RUN apt-get install python3-dev -y

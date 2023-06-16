@@ -3,3 +3,4 @@
 .idea/
 src/__pycache__
 docker-compose.override.yml
+venv
