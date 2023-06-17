@@ -1,6 +1,9 @@
 #!/bin/bash
 set -ex
 
+git submodule init
+git submodule update
+
 j2 .env.j2 > .env
 
 rsync \
