@@ -8,9 +8,10 @@ Uses OpenAPI [text-embedding-ada-002](https://openai.com/blog/new-and-improved-e
 
 *Set these in your .env file. See the .env.j2 template for reference.*
 
-| Variable             | Notes                                                                            |
-|----------------------|----------------------------------------------------------------------------------|
-| OPENAI_API_KEY       | https://platform.openai.com/account/api-keys                                     |
+| Variable               | Notes                                        |
+| ---------------------- | -------------------------------------------- |
+| OPENAI_API_KEY         | https://platform.openai.com/account/api-keys |
+| DATA_DIR               | Persistent storage directory                 |
 
 ## Usage
 

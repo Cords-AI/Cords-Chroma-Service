@@ -1,6 +1,7 @@
 from dotenv import load_dotenv
 load_dotenv()
 
+import uvicorn
 from fastapi import FastAPI, Response
 from collection import collection, client
 from PostParams import PostParams
@@ -18,7 +19,7 @@ async def search(q: str, search_body: SearchBody | None = None):
         query_texts=[q],
         n_results=100,
         where_id=where_id,
-        include=[]
+        include=["distances"]
     )
     return result
 
@@ -27,7 +28,6 @@ async def search(q: str, search_body: SearchBody | None = None):
 async def upsert(params: PostParams):
     collection.upsert(
         ids=[params.id],
-        metadatas=[{"partner": params.partner}],
         documents=[params.document],
     )
     client.persist()
@@ -40,3 +40,7 @@ async def delete(params: DeleteParams):
     )
     client.persist()
     return Response(status_code=200)
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
