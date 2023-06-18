@@ -2,6 +2,7 @@ openai
 tensorflow-hub
 tensorflow-text
 numpy
+gunicorn
 
 clickhouse-connect==0.5.7
 duckdb==0.7.1

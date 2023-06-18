@@ -6,10 +6,12 @@ services:
     build:
       dockerfile: ./docker/Dockerfile
       context: .
+    environment:
+      PORT: 80
     volumes:
       - .:/app
       - ./data:/data
     user: "1000:1000"
     working_dir: /app
-    command: ./docker/init
+    command: ./tools/init
     restart: always
