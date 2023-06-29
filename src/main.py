@@ -4,6 +4,7 @@ load_dotenv()
 
 import uvicorn
 import logging, logging.config
+import time
 from fastapi import FastAPI, Response
 from collection import collection, client
 from PostParams import PostParams
@@ -42,7 +43,7 @@ app = FastAPI()
 
 
 @app.post("/search")
-async def search(q: str, search_body: SearchBody | None = None):
+def search(q: str, search_body: SearchBody | None = None):
     where_id = search_body.ids if search_body and search_body.ids else None
 
     result = collection.query(
@@ -55,16 +56,16 @@ async def search(q: str, search_body: SearchBody | None = None):
 
 
 @app.post("/")
-async def upsert(params: PostParams):
+def upsert(params: PostParams):
     collection.upsert(
-        ids=[params.id],
-        documents=[params.document],
+        ids=params.ids,
+        documents=params.documents,
     )
     client.persist()
 
 
 @app.post("/delete")
-async def delete(params: DeleteParams):
+def delete(params: DeleteParams):
     collection.delete(
         ids=params.ids,
     )

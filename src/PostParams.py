@@ -1,5 +1,7 @@
 from pydantic import BaseModel
+from typing import List
+
 
 class PostParams(BaseModel):
-    id: str
-    document: str
+    ids: List[str]
+    documents: List[str]
