@@ -10,7 +10,7 @@ services:
       PORT: 80
     volumes:
       - .:/app
-      - ./data:/data
+      - ../data/chroma-data:/data
     user: "1000:1000"
     working_dir: /app
     command: ./tools/init

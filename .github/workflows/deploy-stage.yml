@@ -7,11 +7,9 @@ on:
 
 jobs:
   deploy:
-    runs-on: internal-stage
+    runs-on: z1d-dev
 
     env:
-      DATA_SERVICE_URL: https://api-dev.cords.dev
-      DATA_SERVICE_API_KEY: ${{ secrets.DATA_SERVICE_API_KEY }}
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
     steps:
@@ -19,4 +17,4 @@ jobs:
         with:
           fetch-depth: 0
           ssh-key: ${{ secrets.DEPLOY_KEY }}
-      - run: ./tools/deploy /home/ubuntu/sites/chroma-service
+      - run: ./tools/deploy /nvme1/docker/chroma-service
