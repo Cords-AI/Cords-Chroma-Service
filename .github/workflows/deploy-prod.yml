@@ -1,0 +1,20 @@
+name: Deploy Stage
+
+on:
+  push:
+    branches:
+      - release/prod
+
+jobs:
+  deploy:
+    runs-on: backend-prod
+
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
+      - run: ./tools/deploy /nvme1/docker/chroma-service
