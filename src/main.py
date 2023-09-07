@@ -4,8 +4,7 @@ load_dotenv()
 
 import uvicorn
 import logging, logging.config
-import time
-from fastapi import FastAPI, Response
+from fastapi import FastAPI, Response, HTTPException
 from collection import collection, client
 from PostParams import PostParams
 from DeleteParams import DeleteParams
@@ -71,6 +70,28 @@ def delete(params: DeleteParams):
     )
     client.persist()
     return Response(status_code=200)
+
+
+@app.post("/neighbors")
+def embedding(id: str, search_body: SearchBody | None = None):
+    where_id = search_body.ids if search_body and search_body.ids else None
+
+    result = collection.get(
+            ids=[id],
+            include=["embeddings"]
+    )
+
+    if not result["embeddings"]:
+        raise HTTPException(status_code=400, detail="Invalid id")
+
+    result = collection.query(
+        query_embeddings=result["embeddings"],
+        n_results=5,
+        where_id=where_id,
+        include=["distances"]
+    )
+
+    return result
 
 
 if __name__ == "__main__":
