@@ -42,7 +42,7 @@ app = FastAPI()
 
 
 @app.post("/search")
-def search(q: str, search_body: SearchBody | None = None):
+async def search(q: str, search_body: SearchBody | None = None):
     where_id = search_body.ids if search_body and search_body.ids else None
 
     result = collection.query(
@@ -55,7 +55,7 @@ def search(q: str, search_body: SearchBody | None = None):
 
 
 @app.post("/")
-def upsert(params: PostParams):
+async def upsert(params: PostParams):
     collection.upsert(
         ids=params.ids,
         documents=params.documents,
@@ -64,7 +64,7 @@ def upsert(params: PostParams):
 
 
 @app.post("/delete")
-def delete(params: DeleteParams):
+async def delete(params: DeleteParams):
     collection.delete(
         ids=params.ids,
     )
@@ -73,7 +73,7 @@ def delete(params: DeleteParams):
 
 
 @app.post("/neighbors")
-def embedding(id: str, search_body: SearchBody | None = None):
+async def embedding(id: str, search_body: SearchBody | None = None):
     where_id = search_body.ids if search_body and search_body.ids else None
 
     result = collection.get(
