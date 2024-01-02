@@ -1,0 +1,27 @@
+name: Mirror Main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  Mirror-Main:
+    runs-on: ubuntu-latest
+    env:
+      KEY: ${{ secrets.BOT_SSH_KEY }}
+      TARGET: ${{ vars.PUBLIC_MIRROR }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Configure SSH
+        run: |
+          mkdir ~/.ssh
+          echo "$KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+
+      - name: Push
+        run: |
+          git remote add target $TARGET
+          git push target main
