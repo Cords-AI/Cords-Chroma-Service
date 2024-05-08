@@ -43,12 +43,12 @@ app = FastAPI()
 
 @app.post("/search")
 async def search(q: str, search_body: SearchBody | None = None):
-    where_id = search_body.ids if search_body and search_body.ids else None
+    where_id = search_body.ids if search_body and search_body.ids else ''
 
     result = collection.query(
         query_texts=[q],
         n_results=100,
-        where_id=where_id,
+        where={"where_id": where_id},
         include=["distances"]
     )
     return result
@@ -60,7 +60,6 @@ async def upsert(params: PostParams):
         ids=params.ids,
         documents=params.documents,
     )
-    client.persist()
 
 
 @app.post("/delete")
@@ -68,7 +67,6 @@ async def delete(params: DeleteParams):
     collection.delete(
         ids=params.ids,
     )
-    client.persist()
     return Response(status_code=200)
 
 
@@ -87,7 +85,7 @@ async def embedding(id: str, search_body: SearchBody | None = None):
     result = collection.query(
         query_embeddings=result["embeddings"],
         n_results=5,
-        where_id=where_id,
+        where={"where_id": where_id},
         include=["distances"]
     )
 

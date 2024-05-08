@@ -18,11 +18,6 @@ if "OPENAI_API_KEY" in os.environ and os.environ["OPENAI_API_KEY"] != "":
         model_name=model_name
     )
 
-client = chromadb.Client(
-    chromadb.config.Settings(
-        chroma_db_impl="duckdb+parquet",
-        persist_directory=f"{os.environ['DATA_DIR']}/{model_name}"
-    )
-)
+client = chromadb.PersistentClient(path=f"{os.environ['DATA_DIR']}/{model_name}")
 
 collection = client.get_or_create_collection(name="cords", embedding_function=embedding_function)
